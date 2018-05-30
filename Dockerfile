@@ -1,8 +1,8 @@
-
-FROM microsoft/aspnetcore:1
-LABEL Name=aspnetcoretodo Version=0.0.1
-ARG source=.
+FROM microsoft/dotnet:latest
+COPY . /app
 WORKDIR /app
-EXPOSE 5000
-COPY $source .
-ENTRYPOINT dotnet aspnetcoretodo.dll
+RUN ["dotnet", "restore"]
+RUN ["dotnet", "build"]
+EXPOSE 5000/tcp
+ENV ASPNETCORE_URLS http://*:5000
+ENTRYPOINT ["dotnet", "run"]
