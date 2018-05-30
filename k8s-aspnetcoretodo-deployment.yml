@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: aspnetcoretodo-deployment
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: aspnetcoretodo
+    spec:
+      containers:
+      - name: aspnetcoretodo
+        image: alfogocregistry.azurecr.io/aspnetcoretodo
+        ports:
+        - containerPort: 5000
+      imagePullSecrets:
+        - name: regcred
